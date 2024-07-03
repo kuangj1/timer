@@ -1,5 +1,5 @@
 let countdown;
-let running = true;
+let running = false;
 let targetTime;
 
 const timeDisplay = document.getElementById('time');
