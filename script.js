@@ -14,13 +14,23 @@ stopButton.addEventListener('click', stopTimer);
 resetButton.addEventListener('click', resetTimer);
 
 function setTime() {
-    const hours = parseInt(document.getElementById('hours').value) || 0;
-    const minutes = parseInt(document.getElementById('minutes').value) || 0;
-    const seconds = parseInt(document.getElementById('seconds').value) || 0;
-    targetTime = (hours * 3600 + minutes * 60 + seconds) * 1000;
+    const hours = parseInt(document.getElementById('hours').value);
+    const minutes = parseInt(document.getElementById('minutes').value);
 
-    if (targetTime > 0) {
-        updateDisplay(targetTime);
+    if (!isNaN(hours) && !isNaN(minutes)) {
+        const now = new Date();
+        targetTime = new Date();
+        targetTime.setHours(hours);
+        targetTime.setMinutes(minutes);
+        targetTime.setSeconds(0);
+
+        if (targetTime <= now) {
+            targetTime.setDate(targetTime.getDate() + 1);
+        }
+
+        const timeDiff = targetTime - now;
+        updateDisplay(timeDiff);
+
         startButton.disabled = false;
         resetButton.disabled = false;
     }
@@ -52,15 +62,17 @@ function resetTimer() {
 }
 
 function updateTimer() {
-    targetTime -= 1000;
-    if (targetTime <= 0) {
+    const now = new Date();
+    const timeDiff = targetTime - now;
+
+    if (timeDiff <= 0) {
         clearInterval(countdown);
         updateDisplay(0);
         running = false;
         startButton.disabled = true;
         stopButton.disabled = true;
     } else {
-        updateDisplay(targetTime);
+        updateDisplay(timeDiff);
     }
 }
 
