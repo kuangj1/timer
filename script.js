@@ -8,14 +8,37 @@ const startButton = document.getElementById('start');
 const stopButton = document.getElementById('stop');
 const resetButton = document.getElementById('reset');
 
-setButton.addEventListener('click', setTime);
+setButton.addEventListener('click', setTime1);
 startButton.addEventListener('click', startTimer);
 stopButton.addEventListener('click', stopTimer);
 resetButton.addEventListener('click', resetTimer);
 
-function setTime() {
-    const hours = parseInt(document.getElementById('hours').value);
-    const minutes = parseInt(document.getElementById('minutes').value);
+function setTime1() {
+    const hours = parseInt(document.getElementById('hours1').value);
+    const minutes = parseInt(document.getElementById('minutes1').value);
+
+    if (!isNaN(hours) && !isNaN(minutes)) {
+        const now = new Date();
+        targetTime = new Date();
+        targetTime.setHours(hours);
+        targetTime.setMinutes(minutes);
+        targetTime.setSeconds(0);
+
+        if (targetTime <= now) {
+            targetTime.setDate(targetTime.getDate() + 1);
+        }
+
+        const timeDiff = targetTime - now;
+        updateDisplay(timeDiff);
+
+        startButton.disabled = false;
+        resetButton.disabled = false;
+    }
+}
+
+function setTime2() {
+    const hours = parseInt(document.getElementById('hours2').value);
+    const minutes = parseInt(document.getElementById('minutes2').value);
 
     if (!isNaN(hours) && !isNaN(minutes)) {
         const now = new Date();
