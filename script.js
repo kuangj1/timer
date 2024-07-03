@@ -1,82 +1,92 @@
-let countdown;
-let running = false;
-let targetTime;
+const timers = [];
 
-const timeDisplay = document.getElementById('time');
-const setButton = document.getElementById('set');
-const startButton = document.getElementById('start');
-const stopButton = document.getElementById('stop');
-const resetButton = document.getElementById('reset');
+for (let i = 1; i <= 12; i++) {
+    timers.push({
+        id: `timer${i}`,
+        countdown: null,
+        running: false,
+        targetTime: null
+    });
+}
 
-setButton.addEventListener('click', setTime);
-startButton.addEventListener('click', startTimer);
-stopButton.addEventListener('click', stopTimer);
-resetButton.addEventListener('click', resetTimer);
+timers.forEach(timer => {
+    const timerElement = document.getElementById(timer.id);
+    const setButton = timerElement.querySelector('.set');
+    const startButton = timerElement.querySelector('.start');
+    const stopButton = timerElement.querySelector('.stop');
+    const resetButton = timerElement.querySelector('.reset');
+    const timeDisplay = timerElement.querySelector('.time');
 
-function setTime() {
-    const hours = parseInt(document.getElementById('hours').value);
-    const minutes = parseInt(document.getElementById('minutes').value);
+    setButton.addEventListener('click', () => setTime(timer, timerElement, timeDisplay, startButton, resetButton));
+    startButton.addEventListener('click', () => startTimer(timer, timeDisplay, startButton, stopButton));
+    stopButton.addEventListener('click', () => stopTimer(timer, startButton, stopButton));
+    resetButton.addEventListener('click', () => resetTimer(timer, timeDisplay, startButton, stopButton, resetButton));
+});
+
+function setTime(timer, timerElement, timeDisplay, startButton, resetButton) {
+    const hours = parseInt(timerElement.querySelector('.hours').value);
+    const minutes = parseInt(timerElement.querySelector('.minutes').value);
 
     if (!isNaN(hours) && !isNaN(minutes)) {
         const now = new Date();
-        targetTime = new Date();
-        targetTime.setHours(hours);
-        targetTime.setMinutes(minutes);
-        targetTime.setSeconds(0);
+        timer.targetTime = new Date();
+        timer.targetTime.setHours(hours);
+        timer.targetTime.setMinutes(minutes);
+        timer.targetTime.setSeconds(0);
 
-        if (targetTime <= now) {
-            targetTime.setDate(targetTime.getDate() + 1);
+        if (timer.targetTime <= now) {
+            timer.targetTime.setDate(timer.targetTime.getDate() + 1);
         }
 
-        const timeDiff = targetTime - now;
-        updateDisplay(timeDiff);
+        const timeDiff = timer.targetTime - now;
+        updateDisplay(timeDiff, timeDisplay);
 
         startButton.disabled = false;
         resetButton.disabled = false;
     }
 }
 
-function startTimer() {
-    if (!running) {
-        countdown = setInterval(updateTimer, 1000);
-        running = true;
+function startTimer(timer, timeDisplay, startButton, stopButton) {
+    if (!timer.running) {
+        timer.countdown = setInterval(() => updateTimer(timer, timeDisplay, startButton, stopButton), 1000);
+        timer.running = true;
         startButton.disabled = true;
         stopButton.disabled = false;
     }
 }
 
-function stopTimer() {
-    clearInterval(countdown);
-    running = false;
+function stopTimer(timer, startButton, stopButton) {
+    clearInterval(timer.countdown);
+    timer.running = false;
     startButton.disabled = false;
     stopButton.disabled = true;
 }
 
-function resetTimer() {
-    clearInterval(countdown);
-    running = false;
-    updateDisplay(0);
+function resetTimer(timer, timeDisplay, startButton, stopButton, resetButton) {
+    clearInterval(timer.countdown);
+    timer.running = false;
+    updateDisplay(0, timeDisplay);
     startButton.disabled = true;
     stopButton.disabled = true;
     resetButton.disabled = true;
 }
 
-function updateTimer() {
+function updateTimer(timer, timeDisplay, startButton, stopButton) {
     const now = new Date();
-    const timeDiff = targetTime - now;
+    const timeDiff = timer.targetTime - now;
 
     if (timeDiff <= 0) {
-        clearInterval(countdown);
-        updateDisplay(0);
-        running = false;
+        clearInterval(timer.countdown);
+        updateDisplay(0, timeDisplay);
+        timer.running = false;
         startButton.disabled = true;
         stopButton.disabled = true;
     } else {
-        updateDisplay(timeDiff);
+        updateDisplay(timeDiff, timeDisplay);
     }
 }
 
-function updateDisplay(time) {
+function updateDisplay(time, timeDisplay) {
     const hours = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((time % (1000 * 60)) / 1000);
