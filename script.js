@@ -3,12 +3,14 @@ let running = false;
 let targetTime;
 
 const timeDisplay = document.getElementById('time');
-const setButton = document.getElementById('set');
+const setButton1 = document.getElementById('set1');
+const setButton2 = document.getElementById('set2');
 const startButton = document.getElementById('start');
 const stopButton = document.getElementById('stop');
 const resetButton = document.getElementById('reset');
 
-setButton.addEventListener('click', setTime1);
+setButton1.addEventListener('click', setTime1);
+setButton2.addEventListener('click', setTime2);
 startButton.addEventListener('click', startTimer);
 stopButton.addEventListener('click', stopTimer);
 resetButton.addEventListener('click', resetTimer);
