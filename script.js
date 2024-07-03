@@ -13,7 +13,7 @@ const setButton3 = document.getElementById('set3');
 
 setButton1.addEventListener('click', setTime1);
 setButton2.addEventListener('click', setTime2);
-setButton2.addEventListener('click', setTime3);
+setButton3.addEventListener('click', setTime3);
 
 startButton.addEventListener('click', startTimer);
 stopButton.addEventListener('click', stopTimer);
