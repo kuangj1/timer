@@ -59,3 +59,15 @@ button#reset {
 button#reset:hover {
     background-color: #007bb5;
 }
+
+.input-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.input-set {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
