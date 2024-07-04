@@ -7,85 +7,46 @@ const startButton = document.getElementById('start');
 const stopButton = document.getElementById('stop');
 const resetButton = document.getElementById('reset');
 
+// Set buttons
 const setButton1 = document.getElementById('set1');
 const setButton2 = document.getElementById('set2');
 const setButton3 = document.getElementById('set3');
+const setButton4 = document.getElementById('set4');
+const setButton5 = document.getElementById('set5');
 
-setButton1.addEventListener('click', setTime1);
-setButton2.addEventListener('click', setTime2);
-setButton3.addEventListener('click', setTime3);
+// Add event listeners
+setButton1.addEventListener('click', () => setTime('hours1', 'minutes1', 'seconds1'));
+setButton2.addEventListener('click', () => setTime('hours2', 'minutes2', 'seconds2'));
+setButton3.addEventListener('click', () => setTime('hours3', 'minutes3', 'seconds3'));
+setButton4.addEventListener('click', () => setTime('hours4', 'minutes4', 'seconds4'));
+setButton5.addEventListener('click', () => setTime('hours5', 'minutes5', 'seconds5'));
 
 startButton.addEventListener('click', startTimer);
 stopButton.addEventListener('click', stopTimer);
 resetButton.addEventListener('click', resetTimer);
 
-function setTime1() {
-    const hours = parseInt(document.getElementById('hours1').value);
-    const minutes = parseInt(document.getElementById('minutes1').value);
+// Set the time to the inputted time
+function setTime(hoursId, minutesId, secondsId) {
+    const hours = parseInt(document.getElementById(hoursId).value) || 0;
+    const minutes = parseInt(document.getElementById(minutesId).value) || 0;
+    const seconds = parseInt(document.getElementById(secondsId).value) || 0;
 
-    if (!isNaN(hours) && !isNaN(minutes)) {
-        const now = new Date();
-        targetTime = new Date();
-        targetTime.setHours(hours);
-        targetTime.setMinutes(minutes);
-        targetTime.setSeconds(0);
+    const now = new Date();
+    targetTime = new Date();
+    targetTime.setHours(hours);
+    targetTime.setMinutes(minutes);
+    targetTime.setSeconds(seconds);
 
-        if (targetTime <= now) {
-            targetTime.setDate(targetTime.getDate() + 1);
-        }
-
-        const timeDiff = targetTime - now;
-        updateDisplay(timeDiff);
-
-        startButton.disabled = false;
-        resetButton.disabled = false;
+    if (targetTime <= now) {
+        targetTime.setDate(targetTime.getDate() + 1);
     }
-}
 
-function setTime2() {
-    const hours = parseInt(document.getElementById('hours2').value);
-    const minutes = parseInt(document.getElementById('minutes2').value);
+    const timeDiff = targetTime - now;
+    updateDisplay(timeDiff);
 
-    if (!isNaN(hours) && !isNaN(minutes)) {
-        const now = new Date();
-        targetTime = new Date();
-        targetTime.setHours(hours);
-        targetTime.setMinutes(minutes);
-        targetTime.setSeconds(0);
-
-        if (targetTime <= now) {
-            targetTime.setDate(targetTime.getDate() + 1);
-        }
-
-        const timeDiff = targetTime - now;
-        updateDisplay(timeDiff);
-
-        startButton.disabled = false;
-        resetButton.disabled = false;
-    }
-}
-
-function setTime3() {
-    const hours = parseInt(document.getElementById('hours3').value);
-    const minutes = parseInt(document.getElementById('minutes3').value);
-
-    if (!isNaN(hours) && !isNaN(minutes)) {
-        const now = new Date();
-        targetTime = new Date();
-        targetTime.setHours(hours);
-        targetTime.setMinutes(minutes);
-        targetTime.setSeconds(0);
-
-        if (targetTime <= now) {
-            targetTime.setDate(targetTime.getDate() + 1);
-        }
-
-        const timeDiff = targetTime - now;
-        updateDisplay(timeDiff);
-
-        startButton.disabled = false;
-        resetButton.disabled = false;
-    }
+    startButton.disabled = false;
+    resetButton.disabled = false;
+    startTimer();
 }
 
 function startTimer() {
