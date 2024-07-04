@@ -13,6 +13,11 @@ const setButton2 = document.getElementById('set2');
 const setButton3 = document.getElementById('set3');
 const setButton4 = document.getElementById('set4');
 const setButton5 = document.getElementById('set5');
+const setButton6 = document.getElementById('set6');
+const setButton7 = document.getElementById('set7');
+const setButtonA = document.getElementById('setA');
+const setButtonL = document.getElementById('setL');
+
 
 // Add event listeners
 setButton1.addEventListener('click', () => setTime('hours1', 'minutes1', 'seconds1'));
@@ -20,6 +25,10 @@ setButton2.addEventListener('click', () => setTime('hours2', 'minutes2', 'second
 setButton3.addEventListener('click', () => setTime('hours3', 'minutes3', 'seconds3'));
 setButton4.addEventListener('click', () => setTime('hours4', 'minutes4', 'seconds4'));
 setButton5.addEventListener('click', () => setTime('hours5', 'minutes5', 'seconds5'));
+setButton6.addEventListener('click', () => setTime('hours5', 'minutes5', 'seconds5'));
+setButton7.addEventListener('click', () => setTime('hours5', 'minutes5', 'seconds5'));
+setButtonA.addEventListener('click', () => setTime('hours5', 'minutes5', 'seconds5'));
+setButtonL.addEventListener('click', () => setTime('hours5', 'minutes5', 'seconds5'));
 
 startButton.addEventListener('click', startTimer);
 stopButton.addEventListener('click', stopTimer);
